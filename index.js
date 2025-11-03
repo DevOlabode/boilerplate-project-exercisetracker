@@ -29,7 +29,7 @@ app.post('/api/users', async(req, res)=>{
   }
   const user = new User({username});
   await user.save();
-  res.send(user);
+  res.status(200).json(user);
 });
 
 
