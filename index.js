@@ -2,7 +2,8 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 require('dotenv').config();
-const User = require('./models/user')
+const User = require('./models/user');
+const Exercise = require('./models/exercise');
 
 const mongoose = require('mongoose');
 
@@ -31,6 +32,10 @@ app.post('/api/users', async(req, res)=>{
   await user.save();
   res.status(200).json(user);
 });
+
+app.post('/api/users/:id/exercise', async(req, res)=>{
+  const { _id, description, duration, date } = req.body
+})
 
 
 const port = process.env.PORT || 3000;
