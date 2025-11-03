@@ -2,13 +2,11 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 require('dotenv').config();
+const User = require('./models/user')
 
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/exercise-tracker', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+mongoose.connect('mongodb://localhost:27017/exercise-tracker');
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -24,8 +22,11 @@ app.get('/', (req, res) => {
 
 app.post('/api/users', async(req, res)=>{
   const {username} = req.body;
+  const user = new User(username);
+  await user.save();
+  res.send(user);
+});
 
-})
 
 const listener = app.listen(process.env.PORT || 3000, () => {
   console.log('Your app is listening on port ' + listener.address().port)
